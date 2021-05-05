@@ -1,20 +1,26 @@
 # Embedded Tomcat -projektipohja 
 
-[![Build Status](https://github.com/ohjelmointi2/embedded-tomcat-template/actions/workflows/maven.yml/badge.svg)](https://github.com/ohjelmointi2/embedded-tomcat-template/actions) [![Deploy to heroku](https://github.com/ohjelmointi2/embedded-tomcat-template/actions/workflows/heroku-deploy.yml/badge.svg)](https://github.com/ohjelmointi2/embedded-tomcat-template/actions/workflows/heroku-deploy.yml)
+[![JUnit tests](../../actions/workflows/maven.yml/badge.svg)](https://github.com/ohjelmointi2/embedded-tomcat-template/actions) [![Heroku](../../actions/workflows/heroku-deploy.yml/badge.svg)](https://github.com/ohjelmointi2/embedded-tomcat-template/actions/workflows/heroku-deploy.yml) [![GitHub Classroom](../../actions/workflows/classroom.yml/badge.svg)](https://github.com/ohjelmointi2/embedded-tomcat-template/actions/workflows/classroom.yml)
 
-Tämä malliprojekti on tarkoitettu pohjaksi verkkosovellusten koodaamiseen Haaga-Helian Ohjelmointi 2 -opintojaksolla. Projektissa hyödynnetään Javan Servlet- sekä JSP-teknologioita yhdessä [Apachen Tomcat](http://tomcat.apache.org/) -sovelluspalvelimen kanssa. Projekti sisältää valmiit asetustiedostot sen tuomiseksi Eclipse-sovelluskehittimeen, mutta voit käyttää sitä soveltaen myös muilla kehitystyökaluilla, kuten [VS Code](https://code.visualstudio.com/) tai [IntelliJ IDEA](https://www.jetbrains.com/idea/).
+Tämä Git-repositorio sisältää valmiin Eclipse-projektin, jota voit käyttää Java-kielisen web-sovelluksen pohjana. Projekti on tarkoitettu pohjaksi verkkosovellusten koodaamiseen Haaga-Helian Ohjelmointi 2 -opintojaksolla. 
 
-## Suositeltua taustamateriaalia
+Projektissa hyödynnetään Javan Servlet- sekä JSP-teknologioita yhdessä [Apachen Tomcat](http://tomcat.apache.org/) -sovelluspalvelimen kanssa. Projekti sisältää valmiit asetustiedostot sen tuomiseksi Eclipse-sovelluskehittimeen, mutta voit käyttää sitä soveltaen myös muilla kehitystyökaluilla, kuten [VS Code](https://code.visualstudio.com/) tai [IntelliJ IDEA](https://www.jetbrains.com/idea/).
 
-**[Introduction to Servlets](https://youtu.be/7TOmdDJc14s)**
-
-Tämä video esittelee perusteet HTTP-palvelimen toiminnassa dynaamisten sivujen (servlet) käsittelyssä. Servlettien rakenne sekä yhteys servlettien ja Tomcatin välillä esitetään tällä videolla varsin selkeällä tavalla.
 
 ## Projektin kopioiminen
 
-Voit tallentaa projektin lähdekoodit itsellesi GitHub-palvelusta monilla eri tavoilla. Yksinkertaisimmillaan voit tallentaa sen [zip-pakettina](https://github.com/haagahelia/embedded-tomcat-template/archive/master.zip), jonka tuot itsellesi Eclipseen import-ominaisuudella. 
+Kloonaa tämä Git-repositorio itsellesi Eclipseen valitsemalla File-valikosta:
 
-Mikäli haluat käyttää omassa työssäsi versionhallintaa, voit kloonata projektin joko [Eclipsen Git-pluginin](https://www.google.com/search?q=git+clone+eclipse) tai jonkin ulkoisen [Git-käyttöliittymän](https://www.google.com/search?q=git+bash+clone) avulla. Toinen vaihtoehto on luoda tästä projektista linkitetty kopio, eli ["fork", jossa voit kokeilla vapaasti omia muutoksiasi](https://github.community/t5/Support-Protips/The-difference-between-forking-and-cloning-a-repository/ba-p/1372).
+```
+File → Import → Git → Projects From Git → Clone URI
+```
+
+Sytä Eclipsen Source Git Repository -dialogin URI-kenttään tämän Git-projektin osoite: `https://github.com/ohjelmointi2/embedded-tomcat-template.git`. Tarvittaessa löydät tarkempia ohjeita projektin kloonaamiseksi [Googlella](https://www.google.com/search?q=git+clone+java+project+into+eclipse).
+
+Varmista projektipohjan toimivuus omalla koneellasi suorittamalla siihen kuuluvat testit. Voit suorittaa testit Eclipsessä klikkaamalla projektia Package-näkymässä hiiren kakkospainikkeella ja valitsemalla "Run As"-kohdasta vaihtoehdon "JUnit Test".
+
+Mikäli sinulla on GitHub-tunnukset, voit kopioida projektin myös omalle käyttäjätunnuksellesi ["Use this template"](https://github.com/ohjelmointi2/embedded-tomcat-template/generate)-painikkeella. Tekemällä oman kopion ja kloonaamalla sen Eclipseen voit lisätä tekemäsi muutokset myös takaisin GitHubiin.
+
 
 ## Projektin tiedostot
 
@@ -44,6 +50,12 @@ embedded-tomcat
 │   │
 │   └───test
 │       ├───java
+│       │   ├───servlet
+│       │   │       IndexServletTest.java
+│       │   │
+│       │   └───testserver
+│       │           TestServer.java
+│       │
 │       └───resources
 ```
 
@@ -59,9 +71,18 @@ Sijainti                                | Tarkoitus
 [src/main/webapp/WEB-INF](src/main/webapp/WEB-INF)                      | Erityinen hakemisto, jonne on estetty suora pääsy selaimilta ¹
 [src/main/webapp/WEB-INF/index.jsp](src/main/webapp/WEB-INF/index.jsp)  | IndexServlet-luokan käyttämä sivupohja
 [src/test/java](src/test/java)                                          | JUnit-testiluokkien pakettien juurihakemisto
+[src/test/java/servlet/IndexServletTest.java](src/test/java/servlet/IndexServletTest.java)  | IndexServlet-luokan JUnit-testit
+[src/test/java/testserver/TestServer.java](src/test/java/testserver/TestServer.java)  | Apuluokka palvelimen testaamiseksi
 [src/test/resources](src/test/resources)                                | Hakemisto esimerkiksi testien .properties-tiedostoille
 
 ¹ "No file contained in the WEB-INF directory may be served directly to a client by the container. However, the contents of the WEB-INF directory are visible to servlet code..." [Java Servlet Specification Version 2.4](http://download.oracle.com/otn-pub/jcp/servlet-2.4-fr-spec-oth-JSpec/servlet-2_4-fr-spec.pdf)
+
+
+## Suositeltua taustamateriaalia
+
+**[Introduction to Servlets](https://youtu.be/7TOmdDJc14s)**
+
+Tämä video esittelee perusteet HTTP-palvelimen toiminnassa dynaamisten sivujen (servlet) käsittelyssä. Servlettien rakenne sekä yhteys servlettien ja Tomcatin välillä esitetään tällä videolla varsin selkeällä tavalla.
 
 
 ## Riippuvuuksien asentaminen
@@ -133,39 +154,39 @@ Voit nyt navigoida selaimellasi osoitteeseen [http://localhost:8080](http://loca
 
 Esimerkkisivu selostaa muutamia vaiheita, jotka palvelinohjelmisto kävi läpi toteuttakseen vastauksen selaimesi pyyntöön. Käymme nämä vaiheet läpi seuraavissa luvuissa.
 
-Mikäli tuloste sisältää seuraavanlaisia virheilmoituksia, portti 8080 on jo varattuna koneellasi ja joudut sulkemaan käynnissä olevan Tomcat-palvelimen alla olevan ohjeen mukaisesti.
+
+### Ongelma Tomcatin käynnistyksessä
+
+Mikäli palvelin ei käynnisty oikein ja tuloste sisältää seuraavanlaisia virheilmoituksia, portti 8080 on jo varattuna koneellasi:
 
 ```log
 INFO: Initializing ProtocolHandler ["http-nio-8080"]
-tammik. 28, 2020 10:17:42 AP. org.apache.catalina.core.StandardService initInternal
+tammik. 28, 2021 10:17:42 AP. org.apache.catalina.core.StandardService initInternal
 SEVERE: Failed to initialize connector [Connector[HTTP/1.1-8080]]
 org.apache.catalina.LifecycleException: Protocol handler initialization failed
-	at org.apache.catalina.connector.Connector.initInternal(Connector.java:995)
-	at org.apache.catalina.util.LifecycleBase.init(LifecycleBase.java:136)
-	...
-	at launch.Main.main(Main.java:44)
+    at org.apache.catalina.connector.Connector.initInternal(Connector.java:995)
+    at org.apache.catalina.util.LifecycleBase.init(LifecycleBase.java:136)
+    ...
+    at launch.Main.main(Main.java:44)
 Caused by: java.net.BindException: Address already in use: bind
-	at java.base/sun.nio.ch.Net.bind0(Native Method)
-	at java.base/sun.nio.ch.Net.bind(Net.java:461)
+    at java.base/sun.nio.ch.Net.bind0(Native Method)
+    at java.base/sun.nio.ch.Net.bind(Net.java:461)
 ```
 
-### Palvelinohjelmiston *uudelleenkäynnistys*
+Tämä johtuu usein siitä, että olet käynnistänyt palvelimesi useaan kertaan, ja jokin aikaisemmista suorituksista on edelleen käynnissä taustalla. 
 
-Tomcat on konfiguroitu lataamaan muuttuneet Java-luokat uudelleen automaattisesti ilman uudelleenkäynnistystä. Kun teet muutoksia ja tallennat tiedostoja, käännetään muuttuneet tiedostot automaattisesti ja Tomcat lataa ne uudelleen:
+Eclipsen "console"-välilehdeltä löytyy painikkeet ["terminate"](https://stackoverflow.com/a/1515229) sekä "remove...", joiden avulla saat suljettua vanhat prosessit. Klikkaa vuorotellen "terminate" ja "remove" -painikkeita, kunnes konsoli on kokonaan tyhjä. Voit joutua sulkemaan isonkin kasan prosesseja, jos niitä on jäänyt roikkumaan.
 
-```
-tammik. 28, 2020 10:14:57 AP. org.apache.catalina.core.StandardContext reload
-INFO: Reloading Context with name [] is completed
-```
-
-Joidenkin isompien muutosten, kuten uusien tiedostojen luomisen yhteydessä, Tomcat ei pysty lataamaan muutoksia "lennossa". Tällöin joudut pysäyttämään palvelimen ensin Eclipsen Console-näkymän [oikeassa yläkulmassa olevasta punaisesta "terminate"-painikkeesta](https://stackoverflow.com/a/1515229) ja käynnistämään `Main.java`-tiedoston uudelleen.
+Käynnistä lopuksi `Main.java`-tiedosto uudelleen.
 
 
 ## Servlet-pohjaisen sovelluksen anatomia
 
 Java EE -spesifikaatiossa on määriteltynä tapa, jolla Java-luokat voivat kommunikoida verkkoyhteyksistä huolehtivien sovelluspalvelimien kanssa. Tämän määrittelyn toteuttavista luokista käytetään termiä "servlet".
 
-### Yläluokka ja annotaatiot
+
+### Yliluokka ja annotaatiot
+
 Teknisesti servletit toteutetaan aivan tavallisina Java-luokkina, jotka:
 1. perivät `javax.servlet.http.HttpServlet`-luokan: `extends HttpServlet`
 2. annotoidaan `javax.servlet.annotation.WebServlet`-annotaatiolla: `@WebServlet("/hello")`
@@ -227,23 +248,22 @@ protected void doGet(HttpServletRequest req, HttpServletResponse resp)
 HTML-muotoisten vastausten muodostaminen edellyttäisi, että sekoitamme Java-koodia ja HTML:ää, mistä tulisi nopeasti vaikeaselkoista ja huonosti ylläpidettävää:
 
 ```java
-/* Tässä esimerkissä on hyödynnetty Java 13:n TextBlock-ominaisuutta 
- * monirivisen merkkijonon muodostamiseksi: https://wiki.eclipse.org/Java13/Examples */
 @Override
 protected void doGet(HttpServletRequest req, HttpServletResponse resp) 
         throws ServletException, IOException {
 
+    String timeString = LocalTime.now().toString();
+
     // FIXME: vaikeasti ylläpidettävää koodia!
-    resp.getWriter().println("""
-            <html>
-                <head>
-                    <title>Hello</title>
-                </head>
-                <body>
-                    <h1>Hello world!</h1>
-                </body>
-            </html>
-        """);
+    resp.getWriter().println("<html>\n"
+            + "    <head>\n"
+            + "        <title>Hello</title>\n"
+            + "    </head>\n"
+            + "    <body>\n"
+            + "        <h1>Hello world!</h1>\n"
+            + "        <p class=\"time\">Time is now " + timeString + "!</p>\n"
+            + "    </body>\n"
+            + "</html>");
 }
 ```
 
